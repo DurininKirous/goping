@@ -1,6 +1,7 @@
 package request
 
 import (
+	"bytes"
 	"log"
 	"net"
 	"os"
@@ -9,6 +10,8 @@ import (
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
 )
+
+const DefaultPayloadSize = 56
 
 type PingOptions struct {
 	ProtocolName string
@@ -27,11 +30,20 @@ func SocketInit(listenAddress string, opts *PingOptions) *icmp.PacketConn {
 }
 
 func MessageInit(message string) icmp.Message {
+	data := []byte(message)
+
+	if len(data) < DefaultPayloadSize {
+		padding := bytes.Repeat([]byte("Q"), DefaultPayloadSize-len(data))
+		data = append(data, padding...)
+	} else if len(data) > DefaultPayloadSize {
+		data = data[:DefaultPayloadSize]
+	}
+
 	wm := icmp.Message{
 		Type: ipv4.ICMPTypeEcho, Code: 0,
 		Body: &icmp.Echo{
 			ID: os.Getpid() & 0xffff, Seq: 1,
-			Data: []byte(message),
+			Data: data,
 		},
 	}
 
