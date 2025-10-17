@@ -45,7 +45,7 @@ sudo ./goping [options] <address>
 
 | Flag | Description                        | Default |
 | ---- | ---------------------------------- | ------- |
-| `-c` | Number of packets to send          | `4`     |
+| `-c` | Number of packets to send          | `-1` (endless)     |
 | `-i` | Interval between packets (seconds) | `1`     |
 
 ### Example
