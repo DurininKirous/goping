@@ -14,14 +14,16 @@ import (
 const DefaultPayloadSize = 56
 
 type PingOptions struct {
-	ProtocolName string
+	ProtocolName   string
+	TimeoutSeconds int
 }
 
 func SocketInit(listenAddress string, opts *PingOptions) *icmp.PacketConn {
 	if opts == nil {
-		opts = &PingOptions{ProtocolName: "ip4:icmp"}
+		opts = &PingOptions{ProtocolName: "ip4:icmp", TimeoutSeconds: 2}
 	}
 	c, err := icmp.ListenPacket(opts.ProtocolName, listenAddress)
+	c.SetReadDeadline(time.Now().Add(time.Duration(opts.TimeoutSeconds * int(time.Second))))
 	if err != nil {
 		log.Fatal(err)
 	}
