@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"goping/internal/flags"
 	"goping/internal/ping"
+	"goping/internal/print"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -19,6 +22,15 @@ func main() {
 		fmt.Println("Usage: goping [options] <address>")
 		os.Exit(1)
 	}
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		<-sigChan
+		fmt.Println("\n\n--- Interrupted ---")
+		print.PrintStatistics(received, sent, rtts)
+		os.Exit(0)
+	}()
 
 	for i := 0; i != flags.Count; i++ {
 		sent++
@@ -30,9 +42,6 @@ func main() {
 		}
 		time.Sleep(time.Duration(flags.Interval * float64(time.Second)))
 	}
-
-	loss := float64(sent-received) / float64(sent) * 100
-	fmt.Printf("\n--- %s ping statistics ---\n", flag.Args()[0])
-	fmt.Printf("%d packets transmitted, %d received, %.1f%% packet loss\n", sent, received, loss)
+	print.PrintStatistics(received, sent, rtts)
 
 }
