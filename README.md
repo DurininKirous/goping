@@ -22,7 +22,7 @@ It sends ICMP Echo Requests, measures round-trip times (RTT), and reports packet
 Clone and build the project:
 
 ```bash
-git clone https://github.com/<your-username>/goping.git
+git clone https://github.com/DurininKirous/goping.git
 cd goping
 go build -o goping ./cmd/app
 ````
