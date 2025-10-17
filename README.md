@@ -1,4 +1,3 @@
-````markdown
 # 🏓 goping — Lightweight ICMP Ping Utility in Go
 
 **goping** is a simple command-line utility written in Go that replicates the core functionality of the classic Unix `ping` tool.  
@@ -106,4 +105,3 @@ goping/
 * Support for IPv6
 * Continuous ping mode (`-c 0` = infinite)
 * JSON/CSV output for automation
-
