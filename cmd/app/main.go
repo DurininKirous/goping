@@ -35,7 +35,7 @@ func main() {
 	for i := 0; i != flags.Count; i++ {
 		sent++
 		start := time.Now()
-		ok := ping.PingOnce("0.0.0.0", "HUI", flag.Args()[0])
+		ok := ping.PingOnce("0.0.0.0", "HUI", flag.Args()[0], flags.Timeout)
 		if ok {
 			received++
 			rtts = append(rtts, time.Since(start))

@@ -11,6 +11,7 @@ import (
 const DefaultMTU = 1500
 
 func GetMessageBytes(socket *icmp.PacketConn, start *time.Time) ([]byte, int, net.Addr, time.Duration, error) {
+
 	readBytes := make([]byte, DefaultMTU)
 	n, peer, err := socket.ReadFrom(readBytes)
 	if err != nil {
