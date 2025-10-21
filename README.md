@@ -1,4 +1,3 @@
-````markdown
 # 🏓 goping — Lightweight ICMP Ping Utility in Go
 
 **goping** is a simple command-line utility written in Go that replicates the core functionality of the classic Unix `ping` tool.  
@@ -23,7 +22,7 @@ It sends ICMP Echo Requests, measures round-trip times (RTT), and reports packet
 Clone and build the project:
 
 ```bash
-git clone https://github.com/<your-username>/goping.git
+git clone https://github.com/DurininKirous/goping.git
 cd goping
 go build -o goping ./cmd/app
 ````
@@ -46,7 +45,7 @@ sudo ./goping [options] <address>
 
 | Flag | Description                        | Default |
 | ---- | ---------------------------------- | ------- |
-| `-c` | Number of packets to send          | `4`     |
+| `-c` | Number of packets to send          | `-1` (endless)     |
 | `-i` | Interval between packets (seconds) | `1`     |
 
 ### Example
@@ -106,4 +105,3 @@ goping/
 * Support for IPv6
 * Continuous ping mode (`-c 0` = infinite)
 * JSON/CSV output for automation
-
